@@ -2,8 +2,8 @@
   <div id="guanli">
     <div class="box">
       <div class="chaxun">
-        <input type="text" />
-        <button>查询</button>
+        <input type="text" v-model="value"/>
+        <button @click="find">查询</button>
       </div>
       <div class="table">
         <table cellspacing="0" cellpadding="0">
@@ -62,11 +62,11 @@
 export default {
   data() {
     return {
-     
+      value:"",
       guanli: [
         {
           name: "sdfg",
-          phone: 17621322007,
+          phone: 18937712107,
           zuping: "国内租",
           chexing: "经济型",
           zj: "身份证",
@@ -208,6 +208,15 @@ export default {
         // let len=this.guanli.length-ind+2;
         this.guanli.splice(ind,1);
         
+    },
+    find(){
+      // console.log(1);
+      this.guanli.forEach(item=>{
+        console.log(item.phone);
+        // if(item.phone.indexOf(parseInt(this.value))!==-1){
+          
+        // }
+      })
     }
   },
   components: {},
