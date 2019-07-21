@@ -4,7 +4,7 @@
       <div class="t_left">
         <h3>会员信息</h3>
         <p>
-          <span>姓名</span>
+          <span >姓名</span>
           <span>张顺顺</span>
         </p>
         <p>
@@ -23,7 +23,7 @@
           <span>证件号</span>
           <span>123456789765432</span>
         </p>
-        <span>编辑</span>
+        <span @click='edit'>编辑</span>
       </div>
       <div class="t_right">
         <h3>账户信息</h3>

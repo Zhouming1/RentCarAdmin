@@ -38,10 +38,15 @@ export default {
 
 <style lang='less'>
 #app {
-  width: 100%;
+  width: 1440px;
   height: 100%;
   margin: 0 auto;
 background: url('./../static/img/bg.jpg') no-repeat;
 background-size: cover;
+}
+@media all and (min-width: 681px) and (max-width: 1366px){
+  #app {
+  width: 100%;
+}
 }
 </style>

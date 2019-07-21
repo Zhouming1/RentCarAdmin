@@ -2,14 +2,14 @@
   <div id="jiesuan">
     <div class="jiesuan" v-if="chaxun">
       <div class="content">
-        <input type="text" />
-        <button @click='chaxun=false'>查询</button>
+        <input type="text" v-model="cha">
+        <button @click='fn'>查询</button>
       </div>
     </div>
     <div class="jiesuan_" v-if="!chaxun">
       <div class="chaxun">
-        <input type="text" />
-        <button>查询</button>
+        <input type="text" name='number' v-model="cha">
+        <button @click='fn'>查询</button>
       </div>
       <div class="table">
         <table cellspacing="0" cellpadding="0">
@@ -39,18 +39,18 @@
           <tr v-for="(item,index) in jiesuan" :key="index">
             <td>
               <input type="checkbox" />
-              <span v-text="item.zuping"></span>
+              <span v-text="item.leaseWay"></span>
             </td>
-            <td v-text="item.name"></td>
+            <td v-text="item.userName"></td>
             <td v-text="item.phone"></td>
-            <td v-text="item.chexing"></td>
-            <td v-text="item.zj"></td>
-            <td v-text="item.zjh"></td>
-            <td v-text="item.time"></td>
+            <td v-text="item.carType"></td>
+            <td v-text="item.cardType"></td>
+            <td v-text="item.cardId"></td>
+            <td v-text="item.quDate"></td>
             <td>
               <div>
                 <img src="./../../static/img/shouli.png" />
-                <span style="color:#0a82e1">受理</span>
+                <span style="color:#0a82e1" @click='shouli(3,1)'>受理</span>
               </div>
             </td>
           </tr>
@@ -65,6 +65,7 @@ export default {
   data() {
     return {
       chaxun:true,
+      cha:'',
       jiesuan: [
         {
           name: "邱士长",
@@ -168,7 +169,41 @@ export default {
       ]
     };
   },
-  methods: {},
+  methods: {
+    shouli(num, tab) {
+      this.$store.commit("changetabnum", num);
+      this.$store.commit("changetabtab", tab);
+      if (
+        this.$store.state.tag.name.indexOf(
+          this.$store.state.Tab.Tab_[num - 1].tits[tab].tit
+        ) == -1
+      ) {
+        this.$store.state.tag.tag_.push({
+          name: this.$store.state.Tab.Tab_[num - 1].tits[tab].tit,
+          url: this.$store.state.Tab.Tab_[num - 1].tits[tab].href,
+          num: this.$store.state.Tab.num,
+          tab: this.$store.state.Tab.tab,
+          head: this.$store.state.Tab.Tab_[num - 1].tits[tab].head
+        });
+        this.$store.state.tag.name.push(
+          this.$store.state.Tab.Tab_[num - 1].tits[tab].tit
+        );
+      }
+      this.$store.commit(
+        "changetaglight",
+        this.$store.state.Tab.Tab_[num - 1].tits[tab].head
+      );
+      this.$router.push('/index/shouliyuding');
+    },
+    fn(){
+      console.log(this.$store.state.IP)
+      this.chaxun=false;
+      this.$axios.get(this.$store.state.IP+'/leaserecord/getAll?number='+this.cha).then((res)=>{
+        console.log(res);
+        this.jiesuan=res.data.leaserecordList;
+      })
+    }
+  },
   components: {}
 };
 </script>
